@@ -40,11 +40,11 @@ Ext.application({
     controllers: [
         'Business'
     ],
-    name: 'CityBars',
+    name: 'TreatLocations',
 
     launch: function() {
 
-        Ext.create('CityBars.view.MainNav', {fullscreen: true});
+        Ext.create('TreatLocations.view.MainNav', {fullscreen: true});
     }
 
 });
