@@ -13,24 +13,12 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('Treatlocations.store.BusinessStore', {
-    extend: 'Ext.data.Store',
-
-    requires: [
-        'TreatLocations.model.Business',
-        'Ext.data.proxy.JsonP',
-        'Ext.data.reader.Json'
-    ],
-
-    config: {
-        model: 'TraetLocations.model.Business',
-        storeId: 'BusinessStore',
-        proxy: {
-            type: 'jsonp',
-            reader: {
-                type: 'json',
-                rootProperty: 'businesses'
-            }
-        }
+Ext.define('TreatLocations.store.BusinessStore', {
+    extend : "Ext.data.Store",
+    requires : [ 'TreatLocations.model.Business' ],
+    config : {
+        storeId : 'locationStore',
+        model : 'TreatLocations.model.Business',
+	autoLoad: true
     }
 });

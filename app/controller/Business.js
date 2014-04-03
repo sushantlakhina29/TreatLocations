@@ -137,11 +137,56 @@ Ext.define('TreatLocations.controller.Business', {
             });
         }
     },
-
-    getBusinesses: function(location, callback) {
-
-        var store = Ext.data.StoreManager.lookup('BusinessStore'),
-            url = 'http://localhost:8084/openmrs-standalone/ws/rest/v1/location' ;
+computeDistance:function(){
+	Ext.device.Geolocation.getCurrentPosition({
+	    success: this.onGeolocationSuccess,
+	    failure: this.onGeolocationFailure
+	});
+    },
+    
+    onGeolocationFailure: function() {
+	position = {
+	    coords : {
+		latitude: 29.3100°,
+		longitude:76.3200°
+	    }
+	};
+	this.geolocation.initialConfig.success(position);
+	},
+    onGeolocationSuccess: function(position){
+	var currentLocation = position.coords;
+	locationStore=Ext.getStore('BusinessStore');
+	var origin = new google.maps.LatLng(currentLocation.latitude, currentLocation.longitude);
+	var destination = [];
+	locationStore.each(function(record){
+	    var dest = new google.maps.LatLng(record.data.latitude,record.data.longitude);
+	    destination.push(dest);
+	});
+	service = new google.maps.DistanceMatrixService();
+	service.getDistanceMatrix(
+	    {
+		origins: [origin],
+		destinations: destination,
+		travelMode: google.maps.TravelMode.DRIVING,
+		avoidHighways: false,
+		avoidTolls: false
+	    },
+	    function(response,status){
+		if (status=="OK"){
+		    result = response.rows[0].elements;
+		    TreatLocations.globals={distanceDictionary:{}};
+		    BusinessStore.each(function(record){
+			distance = result[0].distance;
+			});
+		}
+		else{
+		    console.log("distance not recieved successfully");
+		    });
+    getBusinesses: function( item, record, target, index, e, eOpts ){
+	console.log(record);
+	url=record.data.person.identifiers[0].links[0].uri;
+	Ext.Ajax.request({
+	    url: url+'?v=full',
         store.getProxy().setUrl(url);
         store.load(function() {
             callback(store);

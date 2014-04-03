@@ -13,54 +13,48 @@
  * Do NOT hand edit this file.
  */
 
-Ext.define('TreatLocations.model.Business', {
-    extend: 'Ext.data.Model',
-
-    requires: [
-        'Ext.data.Field'
-    ],
-
-    config: {
-        fields: [
-            {
-                name: 'id',
-                type: 'int'
-            },
-            {
-                name: 'name'
-            },
-            {
-                name: 'latitude'
-            },
-            {
-                name: 'longitude'
-            },
-            {
-                name: 'address1'
-            },
-            {
-                name: 'address2'
-            },
-            {
-                name: 'address3'
-            },
-            {
-                name: 'stateProvince'
-            },
-            {
-                name: 'postalCode'
-            },
-           
-          
-            {
-                name: 'cityVillage'
-            },
-            {
-                name: 'city'
-            },
-            {
-                name: 'country'
-            }
-        ]
-    }
+xt.define( 'TreatLocations.model.Business', {
+	extend: 'Ext.data.Model',
+	config: {
+	  fields: [
+	    'uuid',
+	    'display',
+	    'distance',
+	    'name',
+	    'description',
+	    'address1',
+	    'address2',
+	    'cityVillage',
+	    'stateProvince',
+	    'country',
+	    'postalCode',
+	    'latitude',
+	    'longitude',
+	    'countryDistrict',
+	    'address3',
+	    'address4',
+	    'address5',
+	    'address6',
+	    'tags',
+	    'parentLocation',
+	    'childLocations',
+	    'retired',
+	    'auditInfo',
+	    'attributes',
+	    'links',
+	    'resourceVersion'
+	  ],
+	  proxy: {
+		  type: 'ajax',
+		  url: '/openmrs-standalone/ws/rest/v1/location?v=full',
+		  reader: {
+			  type: 'json',
+			  rootProperty: 'results'
+		  },
+		  listeners: {
+		    metachange: function( proxy, data, eOpts ){console.log(data+'inside proxy listeners');}
+		  }
+	  },
+	autoload: true
+	}
 });

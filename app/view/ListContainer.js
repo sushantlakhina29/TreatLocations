@@ -19,7 +19,8 @@ Ext.define('TreatLocations.view.ListContainer', {
 
     requires: [
         'Ext.dataview.List',
-        'Ext.XTemplate'
+        'Ext.XTemplate',
+		'TreatmentLocations.store.Doctors'
     ],
 
     config: {
@@ -35,6 +36,9 @@ Ext.define('TreatLocations.view.ListContainer', {
                     <span>{address1}</span>',
                     '</div>'
                 ]
+		store: {
+	xclass : 'TreatLocations.store.Doctors'
+               }
             }
         ]
     }

@@ -19,6 +19,7 @@ Ext.define('TreatLocations.view.DetailPanel', {
 
     requires: [
         'Ext.Map',
+		'TreatLocations.store.BusinessStore'
         'Ext.tab.Bar',
         'Ext.XTemplate',
         'Ext.Button',
@@ -40,63 +41,23 @@ Ext.define('TreatLocations.view.DetailPanel', {
                 items: [
                     {
                         xtype: 'container',
-                        id: 'info',
+                        id: 'data',
                         padding: 10,
-                        tpl: [
-                            
-                            '<h2>{name}</h2>',
-                            '<div class="info">',
-                            '    {address1}<br/>',
-                           
-                            '</div>'
-                        ],
-                        layout: 'hbox',
-                        items: [
-                           
-                            {
-                                xtype: 'component',
-                                id: 'data',
-                                padding: 10,
-                                tpl: [
-                                    '<h2>{name}</h2>',
-                                    '<div class="info">',
-                                    '    {address1}<br/>',
-                                    '    <img src="{rating_img_url_small}"/>',
-                                    '</div>'
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        xtype: 'container',
-                        layout: {
-                            type: 'hbox',
-                            pack: 'center'
+                        itemTpl: [
+						 Ext.create('Ext.XTemplate',{
+	                        getDistance: function(uuid){
+	                           dist=TreatLocations.globals.distanceDictionary;
+	                           return dist[uuid];
+                            ],
+                    store: {xclass : 'TreatLocations.store.BusinessStore'}    
                         },
-                        items: [
-                           
-                            {
-                                xtype: 'spacer',
-                                width: 57
-                            },
-                            {
-                                xtype: 'button',
-                                docked: 'left',
-                                itemId: 'moreButton',
-                                width: 100,
-                                text: 'More'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ],
-        tabBar: {
-            docked: 'top',
-            ui: 'light',
-            layout: {
-                type: 'hbox',
-                pack: 'center'
+						
+                   tabBar: {
+                   docked: 'top',
+                   ui: 'light',
+                   layout: {
+                   type: 'hbox',
+                   pack: 'center'
             }
         }
     }

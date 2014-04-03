@@ -29,7 +29,7 @@ Ext.define('TreatLocations.view.MainNav', {
         items: [
             {
                 xtype: 'listcontainer',
-                title: 'City Bars'
+                title: 'Treatment Locations'
             }
         ]
     }
